@@ -56,8 +56,6 @@ def get_weather(region):
     weather = response["now"]["text"]
     # 当前温度
     temp = response["now"]["temp"] + u"\N{DEGREE SIGN}" + "C"
-    # 风向
-    wind_dir = response["now"]["windDir"]
     # 获取逐日天气预报
     url = "https://devapi.qweather.com/v7/weather/3d?location={}&key={}".format(location_id, key)
     response = get(url, headers=headers).json()
@@ -69,17 +67,6 @@ def get_weather(region):
     sunrise = response["daily"][0]["sunrise"]
     # 日落时间
     sunset = response["daily"][0]["sunset"]
-    url = "https://devapi.qweather.com/v7/air/now?location={}&key={}".format(location_id, key)
-    response = get(url, headers=headers).json()
-    if response["code"] == "200":
-        # 空气质量
-        category = response["now"]["category"]
-        # pm2.5
-        pm2p5 = response["now"]["pm2p5"]
-    else:
-        # 国外城市获取不到数据
-        category = ""
-        pm2p5 = ""
     id = random.randint(1, 16)
     url = "https://devapi.qweather.com/v7/indices/1d?location={}&key={}&type={}".format(location_id, key, id)
     response = get(url, headers=headers).json()
